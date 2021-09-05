@@ -1,5 +1,9 @@
 # Robo Recon
  A top down shooter
+ 
+ ![main](https://user-images.githubusercontent.com/26713317/132121208-3137f8d4-561f-44ea-8a3c-1c135bdde542.png)
+ ![inaction](https://user-images.githubusercontent.com/26713317/132121271-4bbfd484-c273-4c53-b480-9415c9c36b0d.png)
+ ![injured](https://user-images.githubusercontent.com/26713317/132121298-a57eb126-d6a0-4068-8625-d42635850acd.png)
 
 ## Dev log
 
