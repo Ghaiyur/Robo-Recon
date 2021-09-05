@@ -31,6 +31,7 @@ function love.load()
     score = 0
     bullets_fired =0
     accuracy = 0
+    survived_time = 0 
 
 end
 
@@ -40,6 +41,11 @@ end
 
 
 function love.update(dt)
+
+    -- Survived time
+    if gameState == 2 then
+        survived_time = survived_time + dt
+    end
 
     -- Player Movement
     -- Right movement
@@ -134,9 +140,14 @@ function love.draw()
         love.graphics.setFont(MyFont)
         love.graphics.printf('Click anywhere to begin!',0,50,love.graphics.getWidth(),'center')
     end
+
+    if gameState == 2 then
+        love.graphics.printf('Press Space to Bring them on!',0,50,love.graphics.getWidth(),'center')
+    end
     -- metrics projects
     love.graphics.printf("Score: " .. score,0,love.graphics.getHeight()-100,love.graphics.getWidth(),'center')
     love.graphics.printf("Accuracy: " .. math.floor(accuracy * 1000) / 1000,0,love.graphics.getHeight()-200,love.graphics.getWidth(),'center')
+    love.graphics.printf("Time: " .. math.floor(survived_time),0,love.graphics.getHeight()-300,love.graphics.getWidth(),'center')
 
     -- Draw Player
     love.graphics.draw(sprites.player,player.x,player.y,playerMouseAngle(),nil,nil,sprites.player:getWidth()/2,sprites.player:getHeight()/2)
@@ -177,6 +188,7 @@ function love.mousepressed(x,y,button)
         score = 0
         bullets_fired = 0
         accuracy = 0
+        survived_time = 0
     end
 end
 
