@@ -32,3 +32,6 @@
         - [x] to get the x of the zom to player use cos (zomplayerangle)
         - [x] to get the y of the zom to player use sin (zomplayerangle)
     - [x] To Make sure the increase of pos towards player has speed , multiple it with zom speed and then also multiple it with delta time to accomodate for frame drops
+- [x] Collision
+    - [x] Use the distance between again to check how far two sprite objects are from each other 
+    - [x] and if the zombie comes within certain pxlen then set zombies to zero
