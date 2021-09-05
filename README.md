@@ -35,3 +35,7 @@
 - [x] Collision
     - [x] Use the distance between again to check how far two sprite objects are from each other 
     - [x] and if the zombie comes within certain pxlen then set zombies to zero
+- [x] Shooting projectiles
+    - [x] Create bullets table and single bullets
+    - [x] For bullet movement create in update a for loop slighlty similar to zombies
+- [] Scaling Sprities

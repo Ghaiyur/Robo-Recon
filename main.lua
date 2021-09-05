@@ -13,6 +13,8 @@ function love.load()
     player.speed = 180
     --Zombies
     zombies = {}
+    -- Bullets
+    bullets = {}
 
 end
 
@@ -47,6 +49,12 @@ function love.update(dt)
             end
         end
     end
+
+    -- Bullet Movement
+    for i,b in ipairs(bullets) do
+        b.x = b.x + (math.cos(b.direction) * b.speed * dt)
+        b.y = b.y + (math.sin(b.direction) * b.speed * dt)
+    end
     
 end
 
@@ -63,9 +71,30 @@ function love.draw()
         love.graphics.draw(sprites.zombie,z.x,z.y,zombiePlayerAngle(z),nil,nil,sprites.zombie:getWidth()/2,sprites.zombie:getHeight()/2)
     end
 
+    -- Draw Bullets
+    for i,b in ipairs(bullets) do
+        love.graphics.draw(sprites.bullet,b.x,b.y)
+    end
+
 end
 
 -- Extra Functions
+
+-- Objects Spawners
+
+-- Zombie Spawner on space
+function love.keypressed(key)
+    if key == 'space' then
+        spawnZombie()
+    end
+end
+
+-- Bullet Spawner
+function love.mousepressed(x,y,button)
+    if button == 1 then
+        spawnBullet()
+    end
+end
 
 -- Player facing the mouse
 function playerMouseAngle()
@@ -84,6 +113,16 @@ function spawnZombie()
     zombie.y = math.random(0,love.graphics.getHeight())
     zombie.speed = 100
     table.insert(zombies,zombie)
+end
+
+-- Spawn Bullets
+function spawnBullet()
+    local bullet = {}
+    bullet.x = player.x
+    bullet.y = player.y
+    bullet.speed = 500
+    bullet.direction = playerMouseAngle()
+    table.insert(bullets,bullet)
 end
 
 -- Distance Between two points
