@@ -11,10 +11,13 @@ function love.load()
     player.x = love.graphics.getWidth() / 2
     player.y = love.graphics.getHeight() / 2
     player.speed = 180
+    --Zombies
+    zombies = {}
 
 end
 
 function love.update(dt)
+
     -- Right movement
     if love.keyboard.isDown('d') then
         player.x = player.x + player.speed*dt -- Mul dt top the speed change to accomodate framedrops
@@ -35,13 +38,32 @@ function love.update(dt)
 end
 
 function love.draw()
+
     --Draw the background
     love.graphics.draw(sprites.background,0,0)
 
     -- Draw Player
     love.graphics.draw(sprites.player,player.x,player.y,playerMouseAngle(),nil,nil,sprites.player:getWidth()/2,sprites.player:getHeight()/2)
+
+    -- Draw Zombies
+    for i,z in ipairs(zombies) do
+        love.graphics.draw(sprites.zombie,z.x,z.y)
+    end
+
 end
 
+-- Extra Functions
+
+-- Player facing the mouse
 function playerMouseAngle()
     return math.atan2(player.y-love.mouse.getY(),player.x-love.mouse.getX()) + math.pi
+end
+
+-- Spawn Zombies
+function spawnZombie()
+    local zombie = {}
+    zombie.x = math.random(0,love.graphics.getWidth())
+    zombie.y = math.random(0,love.graphics.getHeight())
+    zombie.speed = 100
+    table.insert(zombies,zombie)
 end

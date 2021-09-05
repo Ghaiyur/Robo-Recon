@@ -7,6 +7,9 @@
     "Lua.diagnostics.globals": [
         "sprites",
         "player",
-        "playerMouseAngle"
+        "playerMouseAngle",
+        "zombies",
+        "spawnZombie",
+        "zombie"
     ]
 }

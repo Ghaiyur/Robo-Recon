@@ -19,4 +19,7 @@
 - [x] Face the mouse
     - [x] atan2(y1-y2,x1-x2)
     - [x] just add pi to reverse stuff
-- [] Enemies
+- [x] Enemies
+    - [x] Create zombie spawn
+    - [x] Tables of zombies
+    - love.keypressed(key) just activates the function once , whereas isDown keeps checking if the key has been pressed or not 
