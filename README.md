@@ -54,3 +54,5 @@
     - [x] reset zombie spawn rate
     - [x] reset player respawn pos
     - [x] Added accuracy as well
+- [x] Player Injuired state
+    - []One collision activate injured and increase player speed

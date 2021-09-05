@@ -17,6 +17,9 @@ function love.load()
     player.x = love.graphics.getWidth() / 2
     player.y = love.graphics.getHeight() / 2
     player.speed = 180
+    -- Player injury States
+    player.injured = false
+    player.injuredspeed = 270
     --Zombies
     zombies = {}
     -- Bullets
@@ -31,8 +34,7 @@ function love.load()
     score = 0
     bullets_fired =0
     accuracy = 0
-    survived_time = 0 
-
+    survived_time = 0
 end
 
 -- ================================================================================================
@@ -46,24 +48,28 @@ function love.update(dt)
     if gameState == 2 then
         survived_time = survived_time + dt
     end
-
     -- Player Movement
     -- Right movement
     if gameState == 2 then
+        -- Different move speeds
+        local movespeed = player.speed
+        if player.injured then
+            movespeed = player.injuredspeed
+        end
         if love.keyboard.isDown('d') and player.x < love.graphics.getWidth() then
-            player.x = player.x + player.speed*dt -- Mul dt top the speed change to accomodate framedrops
+            player.x = player.x + movespeed*dt -- Mul dt top the speed change to accomodate framedrops
         end
         -- left movement
         if love.keyboard.isDown('a') and player.x > 5 then
-            player.x = player.x - player.speed*dt
+            player.x = player.x - movespeed*dt
         end
         -- up movement
         if love.keyboard.isDown('w') and player.y > 5 then
-            player.y = player.y - player.speed*dt
+            player.y = player.y - movespeed*dt
         end
         -- down movement
         if love.keyboard.isDown('s') and player.y < love.graphics.getHeight() then
-            player.y = player.y + player.speed*dt
+            player.y = player.y + movespeed*dt
         end
     end
 
@@ -74,11 +80,18 @@ function love.update(dt)
 
         -- Zombie Collison with player
         if distanceBetween(z.x,z.y,player.x,player.y) < 30 then
-            for i,z in ipairs(zombies) do
-                zombies[i] = nil
-                gameState = 1
-                player.x = love.graphics.getWidth()/2
-                player.y = love.graphics.getHeight()/2
+            -- If the player is injured, set injured to true and destroy that zombie
+            if player.injured == false then
+                player.injured = true
+                z.dead = true
+            else
+                for i,z in ipairs(zombies) do
+                    zombies[i] = nil
+                    gameState = 1
+                    player.injured = false
+                    player.x = love.graphics.getWidth()/2
+                    player.y = love.graphics.getHeight()/2
+                end
             end
         end
     end
@@ -149,9 +162,15 @@ function love.draw()
     love.graphics.printf("Accuracy: " .. math.floor(accuracy * 1000) / 1000,0,love.graphics.getHeight()-200,love.graphics.getWidth(),'center')
     love.graphics.printf("Time: " .. math.floor(survived_time),0,love.graphics.getHeight()-300,love.graphics.getWidth(),'center')
 
+    -- If injured change sprite colour
+    if player.injured then
+        love.graphics.setColor(math.random(0.8,1),0,0)
+        love.graphics.printf("You are injured!",0,love.graphics.getHeight()-400,love.graphics.getWidth(),'center')
+    end
     -- Draw Player
     love.graphics.draw(sprites.player,player.x,player.y,playerMouseAngle(),nil,nil,sprites.player:getWidth()/2,sprites.player:getHeight()/2)
-
+    -- Revert colour to white post player colouration 
+    love.graphics.setColor(1, 1, 1)
     -- Draw Zombies
     for i,z in ipairs(zombies) do
         love.graphics.draw(sprites.zombie,z.x,z.y,zombiePlayerAngle(z),nil,nil,sprites.zombie:getWidth()/2,sprites.zombie:getHeight()/2)
