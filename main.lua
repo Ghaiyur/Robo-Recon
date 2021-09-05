@@ -26,7 +26,11 @@ function love.load()
     maxTime= 2
     timer = maxTime
     -- Font
-    MyFont = love.graphics.newFont(35) 
+    MyFont = love.graphics.newFont(35)
+    -- Metrics
+    score = 0
+    bullets_fired =0
+    accuracy = 0
 
 end
 
@@ -40,19 +44,19 @@ function love.update(dt)
     -- Player Movement
     -- Right movement
     if gameState == 2 then
-        if love.keyboard.isDown('d') then
+        if love.keyboard.isDown('d') and player.x < love.graphics.getWidth() then
             player.x = player.x + player.speed*dt -- Mul dt top the speed change to accomodate framedrops
         end
         -- left movement
-        if love.keyboard.isDown('a') then
+        if love.keyboard.isDown('a') and player.x > 5 then
             player.x = player.x - player.speed*dt
         end
         -- up movement
-        if love.keyboard.isDown('w') then
+        if love.keyboard.isDown('w') and player.y > 5 then
             player.y = player.y - player.speed*dt
         end
         -- down movement
-        if love.keyboard.isDown('s') then
+        if love.keyboard.isDown('s') and player.y < love.graphics.getHeight() then
             player.y = player.y + player.speed*dt
         end
     end
@@ -93,6 +97,8 @@ function love.update(dt)
             if distanceBetween(z.x,z.y,b.x,b.y) < 20 then -- Using distance between two objects, if less tahn 15px then set flag to dead
                 z.dead = true
                 b.dead = true
+                score = score + 1
+                accuracy = score/bullets_fired
             end
         end
     end
@@ -128,6 +134,9 @@ function love.draw()
         love.graphics.setFont(MyFont)
         love.graphics.printf('Click anywhere to begin!',0,50,love.graphics.getWidth(),'center')
     end
+    -- metrics projects
+    love.graphics.printf("Score: " .. score,0,love.graphics.getHeight()-100,love.graphics.getWidth(),'center')
+    love.graphics.printf("Accuracy: " .. math.floor(accuracy * 1000) / 1000,0,love.graphics.getHeight()-200,love.graphics.getWidth(),'center')
 
     -- Draw Player
     love.graphics.draw(sprites.player,player.x,player.y,playerMouseAngle(),nil,nil,sprites.player:getWidth()/2,sprites.player:getHeight()/2)
@@ -161,9 +170,13 @@ end
 function love.mousepressed(x,y,button)
     if button == 1 and gameState == 2 then -- Can only shoot when gamestate 2
         spawnBullet()
-    elseif button ==1 and gameState == 1 then
+        bullets_fired = bullets_fired + 1
+    elseif button == 1 and gameState == 1 then
         gameState = 2
         maxTime = 2
+        score = 0
+        bullets_fired = 0
+        accuracy = 0
     end
 end
 
