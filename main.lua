@@ -59,8 +59,26 @@ function love.update(dt)
     -- Delete Bullet
     for i=#bullets,1,-1 do  -- #table gives the count basically len(table)
         local b = bullets[i]
-        if b.x < 0 or b.y < 0 or b.x > love.graphics.getWidth() or b.y > love.graphics.getHeight() then
+        if b.x < 0 or b.y < 0 or b.x > love.graphics.getWidth() or b.y > love.graphics.getHeight() or b.dead == true then
             table.remove(bullets,i)
+        end
+    end
+
+    -- Compare zomb to bullet
+    for i,z in ipairs(zombies) do
+        for j,b in ipairs(bullets) do
+            if distanceBetween(z.x,z.y,b.x,b.y) < 20 then -- Using distance between two objects, if less tahn 15px then set flag to dead
+                z.dead = true
+                b.dead = true
+            end
+        end
+    end
+
+    -- Deleting Zombies
+    for i=#zombies,1,-1 do
+        local z = zombies[i]
+        if z.dead == true then
+            table.remove(zombies,i)
         end
     end
 
@@ -120,6 +138,7 @@ function spawnZombie()
     zombie.x = math.random(0,love.graphics.getWidth())
     zombie.y = math.random(0,love.graphics.getHeight())
     zombie.speed = 100
+    zombie.dead = false
     table.insert(zombies,zombie)
 end
 
@@ -130,6 +149,7 @@ function spawnBullet()
     bullet.y = player.y
     bullet.speed = 500
     bullet.direction = playerMouseAngle()
+    bullet.dead = false
     table.insert(bullets,bullet)
 end
 

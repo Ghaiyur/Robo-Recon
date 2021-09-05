@@ -42,3 +42,5 @@
     - [x] Scale in draw
 - [x] Deleting Projectiles
     - [x] if bullet cross the scene delete them by table.remove and their index ,#table gives len
+- [x] Shooting Enemies
+    - [x] Find out if the bullet and zombie collide then set then flags to dead
