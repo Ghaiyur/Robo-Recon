@@ -38,4 +38,7 @@
 - [x] Shooting projectiles
     - [x] Create bullets table and single bullets
     - [x] For bullet movement create in update a for loop slighlty similar to zombies
-- [] Scaling Sprities
+- [x] Scaling Sprities
+    - [x] Scale in draw
+- [x] Deleting Projectiles
+    - [x] if bullet cross the scene delete them by table.remove and their index ,#table gives len
