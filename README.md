@@ -23,3 +23,12 @@
     - [x] Create zombie spawn
     - [x] Tables of zombies
     - love.keypressed(key) just activates the function once , whereas isDown keeps checking if the key has been pressed or not 
+- [x] Enemy Rotation
+    - [x] Created Zombie player angle finder
+    - [x] Make sure to handle the offset of the sprites 
+- [x] Enemy Movement 
+    - [x] Would be slightly similar to player movement, but their movmeent is constanly towards the player
+    - [x] Use Unit circle to make zombie go in same direction as player
+        - [x] to get the x of the zom to player use cos (zomplayerangle)
+        - [x] to get the y of the zom to player use sin (zomplayerangle)
+    - [x] To Make sure the increase of pos towards player has speed , multiple it with zom speed and then also multiple it with delta time to accomodate for frame drops

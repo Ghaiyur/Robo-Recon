@@ -18,6 +18,7 @@ end
 
 function love.update(dt)
 
+    -- Player Movement
     -- Right movement
     if love.keyboard.isDown('d') then
         player.x = player.x + player.speed*dt -- Mul dt top the speed change to accomodate framedrops
@@ -34,6 +35,12 @@ function love.update(dt)
     if love.keyboard.isDown('s') then
         player.y = player.y + player.speed*dt
     end
+
+    -- Zombie Movement
+    for i,z in ipairs(zombies) do
+        z.x = z.x + (math.cos(zombiePlayerAngle(z)) * z.speed * dt)
+        z.y = z.y + (math.sin(zombiePlayerAngle(z)) * z.speed * dt)
+    end
     
 end
 
@@ -47,7 +54,7 @@ function love.draw()
 
     -- Draw Zombies
     for i,z in ipairs(zombies) do
-        love.graphics.draw(sprites.zombie,z.x,z.y)
+        love.graphics.draw(sprites.zombie,z.x,z.y,zombiePlayerAngle(z),nil,nil,sprites.zombie:getWidth()/2,sprites.zombie:getHeight()/2)
     end
 
 end
@@ -57,6 +64,11 @@ end
 -- Player facing the mouse
 function playerMouseAngle()
     return math.atan2(player.y-love.mouse.getY(),player.x-love.mouse.getX()) + math.pi
+end
+
+-- Zombie player angle using same formula
+function zombiePlayerAngle(enemy)
+    return math.atan2(player.y-enemy.y,player.x-enemy.x)
 end
 
 -- Spawn Zombies
