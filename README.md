@@ -14,3 +14,6 @@
 - [x] Delta time
     - [x] mul dt to speed to accomodate framerate drops 
 - [] Player Rotation
+    - [x] angle * (pi/180) radian value
+    - [x] Offset the center of the sprite using sprites.player:getHeight()/2 and sprites.player:getWidth()/2
+    - 
