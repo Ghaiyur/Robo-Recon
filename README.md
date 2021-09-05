@@ -11,3 +11,6 @@
         - [x] and then any operations can be performed under that func
         - [x] increase or decrease x and y of the player 
     - [x] Added player.speed
+- [x] Delta time
+    - [x] mul dt to speed to accomodate framerate drops 
+- [] Player Rotation
