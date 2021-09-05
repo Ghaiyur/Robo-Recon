@@ -1,5 +1,11 @@
-function love.load()
+-- ================================================================================================
+-- LOAD
+-- ================================================================================================
 
+function love.load()
+    
+    -- Randomsize seed
+    math.randomseed(os.time())
     -- Assets
     sprites = {}
     sprites.background = love.graphics.newImage('sprites/background.png')
@@ -16,30 +22,39 @@ function love.load()
     -- Bullets
     bullets = {}
     -- Game state
-    gameState = 2
+    gameState = 1 --1 is main menu, 2 is game
     maxTime= 2
     timer = maxTime
+    -- Font
+    MyFont = love.graphics.newFont(35) 
 
 end
+
+-- ================================================================================================
+-- UPDATE
+-- ================================================================================================
+
 
 function love.update(dt)
 
     -- Player Movement
     -- Right movement
-    if love.keyboard.isDown('d') then
-        player.x = player.x + player.speed*dt -- Mul dt top the speed change to accomodate framedrops
-    end
-    -- left movement
-    if love.keyboard.isDown('a') then
-        player.x = player.x - player.speed*dt
-    end
-    -- up movement
-    if love.keyboard.isDown('w') then
-        player.y = player.y - player.speed*dt
-    end
-    -- down movement
-    if love.keyboard.isDown('s') then
-        player.y = player.y + player.speed*dt
+    if gameState == 2 then
+        if love.keyboard.isDown('d') then
+            player.x = player.x + player.speed*dt -- Mul dt top the speed change to accomodate framedrops
+        end
+        -- left movement
+        if love.keyboard.isDown('a') then
+            player.x = player.x - player.speed*dt
+        end
+        -- up movement
+        if love.keyboard.isDown('w') then
+            player.y = player.y - player.speed*dt
+        end
+        -- down movement
+        if love.keyboard.isDown('s') then
+            player.y = player.y + player.speed*dt
+        end
     end
 
     -- Zombie Movement
@@ -52,6 +67,8 @@ function love.update(dt)
             for i,z in ipairs(zombies) do
                 zombies[i] = nil
                 gameState = 1
+                player.x = love.graphics.getWidth()/2
+                player.y = love.graphics.getHeight()/2
             end
         end
     end
@@ -99,11 +116,18 @@ function love.update(dt)
     end
 
 end
-
+-- ================================================================================================
+-- DRAW
+-- ================================================================================================
 function love.draw()
 
     --Draw the background
     love.graphics.draw(sprites.background,0,0)
+
+    if gameState == 1 then
+        love.graphics.setFont(MyFont)
+        love.graphics.printf('Click anywhere to begin!',0,50,love.graphics.getWidth(),'center')
+    end
 
     -- Draw Player
     love.graphics.draw(sprites.player,player.x,player.y,playerMouseAngle(),nil,nil,sprites.player:getWidth()/2,sprites.player:getHeight()/2)
@@ -119,8 +143,10 @@ function love.draw()
     end
 
 end
-
+-- ================================================================================================
 -- Extra Functions
+-- ================================================================================================
+
 
 -- Objects Spawners
 
@@ -133,8 +159,11 @@ end
 
 -- Bullet Spawner
 function love.mousepressed(x,y,button)
-    if button == 1 then
+    if button == 1 and gameState == 2 then -- Can only shoot when gamestate 2
         spawnBullet()
+    elseif button ==1 and gameState == 1 then
+        gameState = 2
+        maxTime = 2
     end
 end
 

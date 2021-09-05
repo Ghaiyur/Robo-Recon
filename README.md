@@ -48,3 +48,8 @@
     - [x] Make Zombie spawn at edge use random and if and else for four sides
 - [x] Enemy spawn timer
     - [x] When game is one a timer for zombie spawn and each spawn makes max timer reduced thus increasing spawn freq
+- [] Menu, Score and polish
+    - [x] Set game states
+    - [x] game start only when clicked
+    - [x] reset zombie spawn rate
+    - [x] reset player respawn pos
