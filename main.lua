@@ -15,6 +15,10 @@ function love.load()
     zombies = {}
     -- Bullets
     bullets = {}
+    -- Game state
+    gameState = 2
+    maxTime= 2
+    timer = maxTime
 
 end
 
@@ -43,9 +47,11 @@ function love.update(dt)
         z.x = z.x + (math.cos(zombiePlayerAngle(z)) * z.speed * dt)
         z.y = z.y + (math.sin(zombiePlayerAngle(z)) * z.speed * dt)
 
+        -- Zombie Collison with player
         if distanceBetween(z.x,z.y,player.x,player.y) < 30 then
             for i,z in ipairs(zombies) do
                 zombies[i] = nil
+                gameState = 1
             end
         end
     end
@@ -79,6 +85,16 @@ function love.update(dt)
         local z = zombies[i]
         if z.dead == true then
             table.remove(zombies,i)
+        end
+    end
+
+    -- Timer will start counting down, and when it reaches 0 it spawns a zombie and resets
+    if gameState == 2 then
+        timer = timer - dt
+        if timer <= 0 then
+            spawnZombie()
+            maxTime = 0.95 * maxTime
+            timer = maxTime
         end
     end
 
@@ -135,10 +151,27 @@ end
 -- Spawn Zombies
 function spawnZombie()
     local zombie = {}
-    zombie.x = math.random(0,love.graphics.getWidth())
-    zombie.y = math.random(0,love.graphics.getHeight())
-    zombie.speed = 100
+    zombie.x = 0
+    zombie.y = 0
+    zombie.speed = 160
     zombie.dead = false
+
+    -- Mechanics for edge spawn
+    local side = math.random(1,4)
+    if side == 1 then -- Left side
+        zombie.x = -30
+        zombie.y = math.random(0,love.graphics.getHeight())
+    elseif side == 2 then -- Right side
+        zombie.x = love.graphics.getWidth() + 30
+        zombie.y = math.random(0,love.graphics.getHeight())
+    elseif side == 3 then --Top side
+        zombie.x = math.random(0,love.graphics.getWidth())
+        zombie.y = -30
+    elseif side == 4 then -- Bottom side
+        zombie.x = math.random(0,love.graphics.getWidth())
+        zombie.y = love.graphics.getHeight() + 30
+    end
+
     table.insert(zombies,zombie)
 end
 

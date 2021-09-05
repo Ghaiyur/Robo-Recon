@@ -44,3 +44,7 @@
     - [x] if bullet cross the scene delete them by table.remove and their index ,#table gives len
 - [x] Shooting Enemies
     - [x] Find out if the bullet and zombie collide then set then flags to dead
+- [x] Auto zombie spawn
+    - [x] Make Zombie spawn at edge use random and if and else for four sides
+- [x] Enemy spawn timer
+    - [x] When game is one a timer for zombie spawn and each spawn makes max timer reduced thus increasing spawn freq
