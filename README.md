@@ -1,4 +1,4 @@
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FGhaiyur%2FRobo-Recon&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=Robos&edge_flat=true)](https://hits.seeyoufarm.com)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FGhaiyur%2FRobo-Recon&count_bg=%23000000&title_bg=%23000000&icon=&icon_color=%23000000&title=Robos&edge_flat=true)](https://hits.seeyoufarm.com)
 # Robo Recon
  A top down shooter
  
